@@ -29,7 +29,6 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
             "(:name is null or lower(p.name) like lower(concat('%', :name, '%'))) and " +
             "(:price is null or p.price >= :price) and " +
             "(:categoryId is null or p.category.id = :categoryId)")
-
     Page<Product> searchProducts(@Param("name") String name,
                                  @Param("price") BigDecimal price,
                                  @Param("categoryId") Long categoryId,

@@ -12,6 +12,7 @@
 <!-- Hiển thị thông báo -->
 <div th:replace="~{fragments/toast.html}"></div>
 <div class="container mt-4">
+    <h4>Các thuộc tính có dấu <span style="color:red">*</span> là bắt buộc!</h4>
     <h2 class="text-center">Thêm Sản Phẩm</h2>
 
     <form th:action="@{/product/add}" th:object="${product}" method="post">

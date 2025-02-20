@@ -12,10 +12,10 @@
 <!-- Hiển thị thông báo -->
 <div th:replace="~{fragments/toast.html}"></div>
 <div class="container mt-4">
+    <h4>Các thuộc tính có dấu <span style="color:red">*</span> là bắt buộc!</h4>
     <h2 class="text-center">Chỉnh Sửa Sản Phẩm</h2>
 
     <form th:action="@{/product/edit}" th:object="${product}" method="post">
-        <!-- ID sản phẩm (ẩn) -->
         <input type="hidden" th:field="*{id}">
 
         <!-- Tên sản phẩm -->
