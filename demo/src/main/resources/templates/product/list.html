@@ -33,7 +33,7 @@
       </select>
     </div>
     <div class="col-md-2 d-flex">
-      <button type="submit" class="btn btn-primary me-2"><i class="fa fa-search"></i> Tìm kiếm</button>
+      <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Tìm kiếm</button>
       <a th:href="@{/product/list}" class="btn btn-secondary"><i class="fa fa-eraser"></i> Xóa tìm kiếm</a>
     </div>
   </form>
@@ -57,6 +57,16 @@
     </tr>
     </thead>
     <tbody>
+    <tr th:if="${products.content.isEmpty()}">
+      <td colspan="6" class="text-center">Không tìm thấy sản phẩm nào!</td>
+    </tr>
+    <tr th:if="${products.content.isEmpty()}">
+      <td colspan="6" class="text-center">
+        <a th:href="@{/product/list}" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Quay lại danh sách
+        </a>
+      </td>
+    </tr>
     <tr th:each="product, l : ${products}">
       <td th:text="${l.count}"></td>
       <td>
@@ -116,7 +126,25 @@
       </li>
     </ul>
   </nav>
+</div>
 
+<!-- Modal xác nhận xóa sản phẩm -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="confirmDeleteModalLabel">Xác nhận xóa</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="deleteMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="modalNo" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" id="modalYes" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Xóa sản phẩm -->
@@ -132,25 +160,32 @@
             .map(cb => cb.getAttribute("data-name"))
             .join(", ");
 
-    if (!confirm("Bạn có muốn xóa các sản phẩm sau: " + names + " ?")) {
-      return;
-    }
+    document.getElementById("deleteMessage").textContent = "Bạn có muốn xóa các sản phẩm sau: " + names + " ?";
 
-    let ids = Array.from(selectedProducts).map(cb => cb.value).join(",");
+    let confirmModal = new bootstrap.Modal(document.getElementById("confirmDeleteModal"));
+    confirmModal.show();
 
-    fetch(`/product/delete?ids=${ids}`, { method: "DELETE" })
-            .then(response => {
-              if (response.ok) {
-                alert("Xóa thành công!");
-                location.reload();
-              } else {
-                alert("Xóa thất bại!");
-              }
-            })
-            .catch(error => {
-              console.error("Error during deletion:", error);
-              alert("Có lỗi xảy ra trong quá trình xóa.");
-            });
+    document.getElementById("modalYes").onclick = function() {
+      let ids = Array.from(selectedProducts).map(cb => cb.value).join(",");
+      fetch(`/product/delete?ids=${ids}`, { method: "DELETE" })
+              .then(response => {
+                if (response.ok) {
+                  alert("Xóa thành công!");
+                  location.reload();
+                } else {
+                  alert("Xóa thất bại!");
+                }
+              })
+              .catch(error => {
+                console.error("Error during deletion:", error);
+                alert("Có lỗi xảy ra trong quá trình xóa.");
+              });
+      confirmModal.hide();
+    };
+
+    document.getElementById("modalNo").onclick = function() {
+      confirmModal.hide();
+    };
   });
 </script>
 

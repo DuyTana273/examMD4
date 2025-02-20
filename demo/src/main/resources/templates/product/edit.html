@@ -20,21 +20,21 @@
 
         <!-- Tên sản phẩm -->
         <div class="mb-3">
-            <label for="name" class="form-label">Tên sản phẩm</label>
+            <label for="name" class="form-label">Tên sản phẩm<span style="color: red">*</span></label>
             <input type="text" class="form-control" id="name" th:field="*{name}">
             <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
         </div>
 
         <!-- Giá sản phẩm -->
         <div class="mb-3">
-            <label for="price" class="form-label">Giá khởi điểm</label>
-            <input type="number" class="form-control" id="price" th:field="*{price}" step="0.01">
+            <label for="price" class="form-label">Giá khởi điểm<span style="color: red">*</span></label>
+            <input type="number" class="form-control" id="price" th:field="*{price}" step="1">
             <small class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
         </div>
 
         <!-- Loại sản phẩm -->
         <div class="mb-3">
-            <label for="category" class="form-label">Loại sản phẩm</label>
+            <label for="category" class="form-label">Loại sản phẩm<span style="color: red">*</span></label>
             <select id="category" class="form-select" th:field="*{category.id}">
                 <option value="" disabled>-- Chọn loại sản phẩm --</option>
                 <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
@@ -44,10 +44,12 @@
 
         <!-- Trạng thái sản phẩm -->
         <div class="mb-3">
-            <label for="status" class="form-label">Trạng thái</label>
+            <label for="status" class="form-label">Trạng thái<span style="color: red">*</span></label>
             <select id="status" class="form-select" th:field="*{status}">
                 <option value="" disabled>-- Chọn trạng thái --</option>
-                <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"></option>
+                <option th:each="s : ${statuses}"
+                        th:value="${s}"
+                        th:text="${{'PENDING':'Chờ duyệt', 'BIDDING':'Đang đấu giá', 'SUCCESS':'Đã bán'}[s.toString()]}"></option>
             </select>
             <small class="text-danger" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></small>
         </div>

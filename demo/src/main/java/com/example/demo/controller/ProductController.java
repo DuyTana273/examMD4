@@ -40,7 +40,6 @@ public class ProductController {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Product> products;
 
-        // Nếu có bất kỳ điều kiện tìm kiếm nào, gọi searchProducts; nếu không thì dùng findAll.
         if ((name != null && !name.isEmpty()) || price != null || categoryId != null) {
             products = iProductService.searchProducts(name, price, categoryId, pageable);
         } else {
@@ -139,7 +138,6 @@ public class ProductController {
         String[] idArray = ids.split(",");
         for (String idStr : idArray) {
             Long id = Long.parseLong(idStr.trim());
-            // Xóa từng sản phẩm theo id
             iProductService.deleteById(id);
         }
         return "Deleted successfully!";
