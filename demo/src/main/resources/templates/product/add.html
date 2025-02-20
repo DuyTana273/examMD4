@@ -19,21 +19,21 @@
         <!-- Tên sản phẩm -->
         <div class="mb-3">
             <label for="name" class="form-label">Tên sản phẩm<span style="color: red">*</span></label>
-            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+            <input type="text" class="form-control" id="name" th:field="*{name}">
             <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
         </div>
 
         <!-- Giá sản phẩm -->
         <div class="mb-3">
             <label for="price" class="form-label">Giá khởi điểm<span style="color: red">*</span></label>
-            <input type="number" class="form-control" id="price" th:field="*{price}" step="0.01" required>
+            <input type="number" class="form-control" id="price" th:field="*{price}" step="0.01">
             <small class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
         </div>
 
         <!-- Loại sản phẩm -->
         <div class="mb-3">
             <label for="category" class="form-label">Loại sản phẩm<span style="color: red">*</span></label>
-            <select id="category" class="form-select" th:field="*{category.id}" required>
+            <select id="category" class="form-select" th:field="*{category.id}">
                 <option value="">-- Chọn loại sản phẩm --</option>
                 <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
             </select>

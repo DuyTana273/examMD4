@@ -85,10 +85,10 @@ public class ProductDTO implements Validator {
 
         // Validate price
         BigDecimal price = productDTO.getPrice();
-        if(price == null) {
-            errors.rejectValue("price", "input.null");
-        } else if (price.compareTo(BigDecimal.ZERO) < 0 || price.compareTo(new BigDecimal("100000")) > 0) {
-            errors.rejectValue("price", "", "Giá trị giá phải nằm trong khoảng từ 0 đến 100.000 VND");
+        if (price == null) {
+            errors.rejectValue("price", "input.null", "Giá không được để trống");
+        } else if (price.compareTo(new BigDecimal("100000")) < 0 || price.compareTo(new BigDecimal("100000000")) > 0) {
+            errors.rejectValue("price", "", "Giá trị giá phải nằm trong khoảng từ 100,000 VND đến 100,000,000 VND");
         }
 
         // Validate category

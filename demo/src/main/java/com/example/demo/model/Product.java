@@ -13,7 +13,7 @@ public class Product {
     @Column(columnDefinition = "varchar(50) not null")
     private String name;
 
-    @Column(columnDefinition = "decimal(10,2) not null")
+    @Column(columnDefinition = "decimal(18,2) not null")
     private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
